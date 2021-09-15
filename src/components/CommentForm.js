@@ -1,0 +1,4 @@
+
+
+
+//validates :body, presence: true

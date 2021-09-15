@@ -1,0 +1,3 @@
+
+
+// validates :name, presence: true

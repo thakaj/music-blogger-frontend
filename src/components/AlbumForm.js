@@ -1,0 +1,4 @@
+
+
+
+//validates :title, presence: true
