@@ -1,25 +1,21 @@
-import React from 'react'
-import { useState } from 'react'
+import React from "react";
+import {useState} from "react"
 
-
-function SignupPage(){
+function Login({handleLogin}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [passwordConfirmation, setPasswordConfirmation] = useState("")
-    
+
     function handleSubmit(e){
         e.preventDefault()
-        fetch("/users", {
+        fetch("/login", {
             method: "Post",
             headers: {
-                "Accepts": "application/json",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 user: {
                     username,
-                    password,
-                    password_confirmation: passwordConfirmation
+                    password
                 }
             })
         })
@@ -27,44 +23,37 @@ function SignupPage(){
             if (r.ok){
                 r.json()
                     .then(data => {
-                        console.log("Signup was sucessful", data)
+                        console.log("Login was sucessful")
+                        handleLogin(data)
                         setUsername("")
                         setPassword("")
-                        setPasswordConfirmation("")
             })
             }else {
-                console.warn("Signup unsucessful")
+                console.warn("Login unsucessful")
             }
         })
     }
 
     return (
         <div>
-            <label>Sign Up: </label>
+             <label>Login: </label>
              <form onSubmit={handleSubmit}>
-                 
-             <label> Create username: </label><br/>
+             <label> Username: </label><br/>
                <input type="text"  id="username-input" 
                onChange={e => setUsername(e.target.value)}
                value={username}
                placeholder="Enter ..."
                /><br/>
-               <label> Create password: </label><br/>
+               <label> Password: </label><br/>
                <input type="text" id="password-input" 
                onChange={e=> setPassword(e.target.value)}
                value={password}
                placeholder="Enter..."
-               /><br/>
-               <label> Confrim Password </label><br/>
-               <input type="text" id="passwordConirmation-input" 
-               onChange={e=> setPasswordConfirmation(e.target.value)}
-               value={passwordConfirmation}
-               placeholder="Enter..."
                />
-               <button type="submit">Submit!</button>
-           </form>
+                <button type="submit">Submit!</button>
+                <br/>
+             </form>
         </div>
     )
 }
-
-export default SignupPage
+export default Login

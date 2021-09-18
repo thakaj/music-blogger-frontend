@@ -1,87 +1,69 @@
 import React from "react"
-import {useState} from "react"
 
 
 //validates :body, presence: true 
 //validates :title, presence: true
 
-function PostForm({addNewPost, id, editPost}){
-    const [errors, setErrors] = useState([])
-    const [title, setTitle] = useState("")
-    const [body, setBody] = useState("")
-    const [formData, setFormData] = useState({ title: "", body: "" })
+function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost}){
 
-
-    function handleEdit(e){
-        e.preventDefault()
-        fetch(`/posts/${id}`,{
-            method: "POST",
-            headers: {"Content-Type": "application/json",
-        },
-        body: JSON.stringify({title, body}),
-    })
-    .then((r)=> { 
-        if (r.ok) {
-            r.json()
-            .then(data => {
-                setTitle("")
-                setBody("")
-                editPost(data)
-            })
-        } else {
-            r.json()
-            .then(e => setErrors(e))
-        }
-    })
-
+    function handleSubmit(e){
+      e.preventDefault()
+      if(id) {
+        handleEdit()
+    } else {
+        handleCreate()
+    }
+}
+    function handleEdit(){
+        fetch(`/posts/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "application/json"
+            },
+            body: JSON.stringify({title, body})
+        })
+        .then(r => r.json())
+        .then(data => {
+            setTitle("")
+            setBody("")
+            setId("")
+            editPost(data)
+        })
     }
 
-    function onSubmit(e){
-        e.preventDefault()
-        fetch("/posts",{
+
+    function handleCreate(){
+        fetch(`/posts`, {
             method: "POST",
-            headers: {"Content-Type": "application/json",
-        },
-        body: JSON.stringify({title, body}),
-    })
-    .then((r)=> { 
-        if (r.ok) {
-            r.json()
-            .then(data => {
-                setTitle("")
-                setBody("")
-                addNewPost(data)
-            })
-        } else {
-            r.json()
-            .then(e => setErrors(e))
-        }
-    })
-}
-    function handleChange(e){
-        const {name, value} = e.target
-        setFormData({...formData, [name]: value})
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "application/json"
+            },
+            body: JSON.stringify({title, body})
+        })
+        .then(r => r.json())
+        .then(data => addNewPost(data))
     }
     
 
 
     return (
        <div>
-           {errors.length > 0 && errors.map(e=> <alert>{e}</alert>)}
-           <form onSubmit={onSubmit}>
+           <form onSubmit={handleSubmit}>
                <label>Title: </label>
                <input type="text"  id="title" name="title"
-               onChange={handleChange}
-               value={formData.title}
+               onChange={e => setTitle(e.target.value)}
+               value={title}
                placeholder="Enter post title..."
                />
                <label>Body: </label>
                <input type="text" id="body" name="body"
-               onChange={handleChange}
-               value={formData.body}
+               onChange={e=> setBody(e.target.value)}
+               value={body}
                placeholder="What do you want to post about?"
                />
-               <button type="submit">Submit!</button><button onclick={handleEdit} type="edit">Edit</button>
+               <button type="submit">Submit!</button>
            </form>
        </div>
     )

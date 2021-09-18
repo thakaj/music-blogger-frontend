@@ -1,14 +1,18 @@
 import React from 'react'
+import PostForm from './PostForm'
 import {useEffect, useState} from 'react'
-import PostCard from './PostCard'
 
 function PostList(){
-    const [posts, setPosts] = useState([])
-   
+    const [title, setTitle] = useState("")
+    const [body, setBody] = useState("")
+    const [id, setId] = useState("")
+    const [posts, setPosts] = useState([]) 
+
     useEffect(()=>{
         fetch(`/posts`)
         .then((r)=> r.json())
         .then((data) => {
+            
             setPosts(data)
         })
     },[])
@@ -27,10 +31,36 @@ function PostList(){
             })
         })
     }
+    function handleEditButton(post){
+        setBody(post.body)
+        setTitle(post.title)
+        setId(post.id)
+    }
+    function handleDelete(post){
+        fetch(`/posts/${post.id}`,{
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(r => r.json())
+        .then(data => destroyPost(data))
+        window.location.reload()
+    }
 
     return (
         <div>
-            <PostCard/>
+            <PostForm addNewPost={addNewPost} title={title} setTitle={setTitle} body={body} setBody={setBody} id={id} setId={setId} editPost={editPost}/>
+            {posts.map(post => 
+            <div key={post.id}>
+            <article>
+            <h1>{post.title}</h1>
+            <p>{post.body}</p>
+            <button onClick={() => handleEditButton(post)} type="edit">Edit</button>
+            <button onClick={()=> handleDelete(post)}>Delete</button>
+            </article>
+            </div>
+            )}
         </div>
     )
 }
