@@ -1,11 +1,13 @@
 import React from "react"
+import {useState} from "react"
 
 
 //validates :body, presence: true 
 //validates :title, presence: true
 
 function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost}){
-
+    const [errors, setErrors] = useState([])
+    
     function handleSubmit(e){
       e.preventDefault()
       if(id) {
@@ -42,11 +44,18 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
             },
             body: JSON.stringify({title, body})
         })
-        .then(r => r.json())
-        .then(data => addNewPost(data))
+        .then(r => {
+            if (r.ok){
+                r.json()
+                .then(data =>{
+                    addNewPost(data)
+                })
+            }else {
+                r.json()
+                .then(e => setErrors(e))
+            }
+        })
     }
-    
-
 
     return (
        <div>
