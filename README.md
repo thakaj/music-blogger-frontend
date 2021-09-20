@@ -9,7 +9,7 @@ How to Acess:
 3. Run the command npm start to run the application.
 4. If you havent already clone the backend (https://github.com/thakaj/music-blogger) to your local environment.
 5. Run the command bundle install in your terminal to download the required gems to run this backend.
-6. Once they've been installed the required gems run the command shotgun to start the backend server.
+6. Once they've been installed the required gems run the command rails s to start the backend server.
 7. Once both files are running you will be able to use the application as intended.
 
 
@@ -23,4 +23,4 @@ Here is a blog i wrote about making production time: https://taulantfhakaj.mediu
 
 Resources used:
 
-Medium.com Youtube.com Vanilla JS, CSS, React, and Ruby
+Medium.com Youtube.com Vanilla JS, CSS, React, Ruby and Rails
