@@ -4,7 +4,7 @@ import {Switch, Route} from 'react-router-dom'
 import SignupPage from './components/SignUpPage';
 import PostList from './components/PostList';
 import {useEffect, useState} from 'react'
-import LogoutButton from './components/LogoutButton';
+import NavBar from './components/NavBar';
 
 function App() {
   
@@ -32,18 +32,18 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <NavBar user={user} handleLogout={handleLogout}/>
         <Switch> 
           <Route exact path= "/login" >
-            <Login handleLogin={handleLogin} />
+            <Login handleLogin={handleLogin} user={user}  />
           </Route>
-          <Route exact path ="/signup">
-            <SignupPage />
+          <Route exact path ="/">
+            <SignupPage user={user} />
           </Route>
           <Route exact path="/posts">
-            <PostList />
+            <PostList user={user}  />
           </Route>
         </Switch>
-        <LogoutButton handleLogout={handleLogout}/>
       </header>
     </div>
   );

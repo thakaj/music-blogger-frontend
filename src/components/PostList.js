@@ -1,8 +1,9 @@
 import React from 'react'
 import PostForm from './PostForm'
 import {useEffect, useState} from 'react'
+import {Redirect} from "react-router-dom"
 
-function PostList(){
+function PostList({user}){
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
     const [id, setId] = useState("")
@@ -47,7 +48,9 @@ function PostList(){
         .then(data => destroyPost(data))
         window.location.reload()
     }
-
+    if (!user){
+        return <Redirect to="/login"/>
+    }
     return (
         <div>
             <PostForm addNewPost={addNewPost} title={title} setTitle={setTitle} body={body} setBody={setBody} id={id} setId={setId} editPost={editPost}/>

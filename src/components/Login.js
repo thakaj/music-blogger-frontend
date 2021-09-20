@@ -1,7 +1,8 @@
 import React from "react";
 import {useState} from "react"
+import {Redirect} from "react-router-dom"
 
-function Login({handleLogin}){
+function Login({handleLogin, user}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
@@ -27,13 +28,16 @@ function Login({handleLogin}){
                         handleLogin(data)
                         setUsername("")
                         setPassword("")
+                        window.location.reload()
             })
             }else {
                 console.warn("Login unsucessful")
             }
         })
     }
-
+    if (user){
+        return <Redirect to="/posts"/>
+    }
     return (
         <div>
              <label>Login: </label>
