@@ -5,7 +5,7 @@ import {useState} from "react"
 //validates :body, presence: true 
 //validates :title, presence: true
 
-function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost}){
+function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost, user}){
     const [errors, setErrors] = useState([])
     
     function handleSubmit(e){
@@ -36,13 +36,13 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
 
 
     function handleCreate(){
-        fetch(`/posts`, {
+        fetch(`/posts/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accepts": "application/json"
             },
-            body: JSON.stringify({title, body})
+            body: JSON.stringify({title, body, user})
         })
         .then(r => {
             if (r.ok){

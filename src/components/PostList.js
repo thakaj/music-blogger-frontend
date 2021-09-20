@@ -53,7 +53,7 @@ function PostList({user}){
     }
     return (
         <div>
-            <PostForm addNewPost={addNewPost} title={title} setTitle={setTitle} body={body} setBody={setBody} id={id} setId={setId} editPost={editPost}/>
+            <PostForm addNewPost={addNewPost} title={title} setTitle={setTitle} body={body} setBody={setBody} id={id} setId={setId} editPost={editPost} user={user}/>
             {posts.map(post => 
             <div key={post.id}>
             <article>

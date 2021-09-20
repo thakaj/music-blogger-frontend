@@ -28,7 +28,6 @@ function App() {
   function handleLogout(){
     setUser(false)
   }
-
   return (
     <div className="App">
       <header className="App-header">
@@ -41,7 +40,7 @@ function App() {
             <SignupPage  />
           </Route>
           <Route exact path="/posts">
-            <PostList user={user}  />
+            <PostList user={user}/>
           </Route>
         </Switch>
       </header>
