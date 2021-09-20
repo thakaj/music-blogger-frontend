@@ -1,4 +1,4 @@
-# Music-blogger
+# Music-blogger-frontend
 
 This project was created with the intent to be a public place for music lovers to create a unique user as well as posts about their favorite music and allows the user to create, delete, update, and see entries they persisted to the backend. This file is the frontend that contains the user experience desired. This file needs to be run with the backend file to work as designed. You can find the back end here on github: https://github.com/thakaj/music-blogger
 
