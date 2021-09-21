@@ -5,7 +5,8 @@ import {Redirect} from "react-router-dom"
 function Login({handleLogin, user}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-
+    const [errors, setErrors] = useState([])
+    
     function handleSubmit(e){
         e.preventDefault()
         fetch("/login", {
@@ -31,7 +32,8 @@ function Login({handleLogin, user}){
                         window.location.reload()
             })
             }else {
-                console.warn("Login unsucessful")
+                r.json()
+                .then(e => setErrors(e.errors))
             }
         })
     }
@@ -40,6 +42,7 @@ function Login({handleLogin, user}){
     }
     return (
         <div>
+             {errors.length > 0 &&<h2 style={{ color: "red" }} >{errors}</h2>}
              <label>Login: </label>
              <form onSubmit={handleSubmit}>
              <label> Username: </label><br/>

@@ -17,18 +17,10 @@ function NavBar({ user, handleLogout}){
     return(
         <header>
             <nav>
-                
                 <Link to="/posts">Blog Posts</Link>
                 <Link to="/">Signup </Link>
-
-                    {user ? (
-                <div>
-                    <p>Hello, {user.username}</p>
-                    <button onClick={handleDelete}>Logout</button>
-                </div>
-                     ) : ( 
-                    <Link to="/login">Click here to login</Link>
-                     )}
+                {user ? (<div>  <p>Hello, {user.username}</p>   <button onClick={handleDelete}> Logout</button> </div>) 
+                : ( <Link to="/login">Click here to login</Link>)}
             </nav>
         </header>
     )

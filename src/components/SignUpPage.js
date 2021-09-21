@@ -6,6 +6,8 @@ function SignupPage(){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
+    const [errors, setErrors] = useState([])
+    const [messages, setMessages] = useState([])
     
     function handleSubmit(e){
         e.preventDefault()
@@ -27,20 +29,24 @@ function SignupPage(){
             if (r.ok){
                 r.json()
                     .then(data => {
-                        console.log("Signup was sucessful", data)
+                        setMessages(data.messages)
+                        console.log("Signup was sucessful")
                         setUsername("")
                         setPassword("")
                         setPasswordConfirmation("")
             })
             }else {
-                console.warn("Signup unsucessful")
+                r.json()
+                .then(e => setErrors(e.errors))
             }
         })
     }
-   
+    
 
     return (
         <div>
+            {messages.length > 0 &&<h2>{messages}</h2>}
+            {errors.length > 0 && (<ul style={{ color: "red" }}>{errors.map((error) => (<li key={error}>{error}</li>))}</ul>)} 
             <label>Sign Up: </label>
              <form onSubmit={handleSubmit}>
                  

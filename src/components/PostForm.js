@@ -5,7 +5,7 @@ import {useState} from "react"
 //validates :body, presence: true 
 //validates :title, presence: true
 
-function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost, user}){
+function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost}){
     const [errors, setErrors] = useState([])
     
     function handleSubmit(e){
@@ -42,7 +42,7 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
                 "Content-Type": "application/json",
                 "Accepts": "application/json"
             },
-            body: JSON.stringify({title, body, user})
+            body: JSON.stringify({title, body})
         })
         .then(r => {
             if (r.ok){
@@ -52,13 +52,14 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
                 })
             }else {
                 r.json()
-                .then(e => setErrors(e))
+                .then(e => setErrors(e.errors))
             }
         })
     }
 
     return (
        <div>
+           {errors.length > 0 && (<ul style={{ color: "red" }}>{errors.map((error) => (<li key={error}>{error}</li>))}</ul>)} 
            <form onSubmit={handleSubmit}>
                <label>Title: </label>
                <input type="text"  id="title" name="title"

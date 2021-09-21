@@ -37,7 +37,7 @@ function App() {
             <Login handleLogin={handleLogin} user={user}  />
           </Route>
           <Route exact path ="/">
-            <SignupPage  />
+            <SignupPage user={user} />
           </Route>
           <Route exact path="/posts">
             <PostList user={user}/>
