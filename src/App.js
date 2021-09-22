@@ -34,7 +34,7 @@ function App() {
         <NavBar user={user} handleLogout={handleLogout}/>
         <Switch> 
           <Route exact path= "/login" >
-            <Login handleLogin={handleLogin} setUser={setUser}  />
+            <Login handleLogin={handleLogin} user={user} />
           </Route>
           <Route exact path ="/">
             <SignupPage user={user} />
