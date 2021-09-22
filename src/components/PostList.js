@@ -7,7 +7,8 @@ function PostList({user}){
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
     const [id, setId] = useState("")
-    const [posts, setPosts] = useState([]) 
+    const [posts, setPosts] = useState([])
+    const [handleErrors, setHandleErrors] = useState([])
 
     useEffect(()=>{
         fetch(`/posts`)
@@ -44,16 +45,34 @@ function PostList({user}){
                 'Content-Type': 'application/json',
             }
         })
-        .then(r => r.json())
-        .then(data => destroyPost(data))
-        window.location.reload()
+        .then(r => {
+            if (r.ok){
+                r.json()
+                .then(data =>{
+                    destroyPost(data)
+                    window.location.reload()
+                })
+            }else {
+                r.json()
+                .then(e => setHandleErrors(e.errors))
+            }
+        })
     }
+
+   
+   
+
+
+
+
+
     if (!user){
         return <Redirect to="/login"/>
     }
     return (
         <div>
-            <PostForm addNewPost={addNewPost} title={title} setTitle={setTitle} body={body} setBody={setBody} id={id} setId={setId} editPost={editPost} user={user}/>
+            {handleErrors.length > 0 &&<h2 style={{ color: "red" }}>{handleErrors}</h2>}
+            <PostForm addNewPost={addNewPost} title={title} setTitle={setTitle} body={body} setBody={setBody} id={id} setId={setId} editPost={editPost} setHandleErrors={setHandleErrors}/>
             {posts.map(post => 
             <div key={post.id}>
             <article>

@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 
-function SignupPage(){
+function SignupPage({setUser}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
@@ -30,7 +30,6 @@ function SignupPage(){
                 r.json()
                     .then(data => {
                         setMessages(data.messages)
-                        console.log("Signup was sucessful")
                         setUsername("")
                         setPassword("")
                         setPasswordConfirmation("")

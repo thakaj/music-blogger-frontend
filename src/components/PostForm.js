@@ -5,7 +5,7 @@ import {useState} from "react"
 //validates :body, presence: true 
 //validates :title, presence: true
 
-function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost}){
+function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost, setHandleErrors}){
     const [errors, setErrors] = useState([])
     
     function handleSubmit(e){
@@ -25,15 +25,22 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
             },
             body: JSON.stringify({title, body})
         })
-        .then(r => r.json())
-        .then(data => {
-            setTitle("")
-            setBody("")
-            setId("")
-            editPost(data)
+        .then(r => {
+            if (r.ok){
+                r.json()
+                .then(data =>{
+                    setBody("")
+                    setTitle("")
+                    setId("")
+                    editPost(data)
+                })
+            }else {
+                r.json()
+                .then(e => setHandleErrors(e.errors))
+            }
         })
     }
-
+    
 
     function handleCreate(){
         fetch(`/posts/`, {
@@ -48,6 +55,8 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
             if (r.ok){
                 r.json()
                 .then(data =>{
+                    setBody("")
+                    setTitle("")
                     addNewPost(data)
                 })
             }else {
@@ -58,7 +67,7 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
     }
 
     return (
-       <div>
+        <div>
            {errors.length > 0 && (<ul style={{ color: "red" }}>{errors.map((error) => (<li key={error}>{error}</li>))}</ul>)} 
            <form onSubmit={handleSubmit}>
                <label>Title: </label>
