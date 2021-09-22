@@ -19,7 +19,7 @@ Here is the backend file needed: https://github.com/thakaj/music-blogger
 
 Here is a video explanation of my project: https://www.youtube.com/watch?v=w156-EvAtME&ab_channel=TaulantHakaj
 
-Here is a blog i wrote about making production time: https://taulantfhakaj.medium.com/when-perfectionism-has-a-deadline-75eea09eb6a7
+Here is a blog i wrote about verifying users within strong paramaters: https://taulantfhakaj.medium.com/verifying-users-within-strong-parameters-ruby-on-rails-eb1c671dd868
 
 Resources used:
 
