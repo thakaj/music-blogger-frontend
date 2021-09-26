@@ -17,7 +17,7 @@ Supplemental guides:
 
 Here is the backend file needed: https://github.com/thakaj/music-blogger
 
-Here is a video explanation of my project: https://www.youtube.com/watch?v=w156-EvAtME&ab_channel=TaulantHakaj
+Here is a video explanation of my project: https://www.youtube.com/watch?v=jd6NT-8eljE&ab_channel=TaulantHakaj
 
 Here is a blog i wrote about authenticating users and authorizing their ability to access some CRUD functionality: https://taulantfhakaj.medium.com/authorizing-users-to-access-crud-functionality-with-ruby-on-rails-fb852920da0e
 
