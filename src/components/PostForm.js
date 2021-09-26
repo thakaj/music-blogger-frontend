@@ -1,12 +1,10 @@
 import React from "react"
-import {useState} from "react"
 
 
 //validates :body, presence: true 
 //validates :title, presence: true
 
-function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost, setHandleErrors}){
-    const [errors, setErrors] = useState([])
+function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost, setHandleErrors, handleErrors}){
     
     function handleSubmit(e){
       e.preventDefault()
@@ -32,6 +30,9 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
                     setBody("")
                     setTitle("")
                     setId("")
+                    if (handleErrors){
+                        setHandleErrors([])
+                    }
                     editPost(data)
                 })
             }else {
@@ -57,18 +58,21 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
                 .then(data =>{
                     setBody("")
                     setTitle("")
+                    if (handleErrors){
+                        setHandleErrors([])
+                    }
                     addNewPost(data)
                 })
             }else {
                 r.json()
-                .then(e => setErrors(e.errors))
+                .then(e => setHandleErrors(e.errors))
             }
         })
     }
 
     return (
         <div>
-           {errors.length > 0 && (<ul style={{ color: "red" }}>{errors.map((error) => (<li key={error}>{error}</li>))}</ul>)} 
+           {/* {errors.length > 0 && (<ul style={{ color: "Black" }}>{errors.map((error) => (<li key={error}>Error: {error}</li>))}</ul>)}  */}
            <form onSubmit={handleSubmit}>
                <label>Title: </label>
                <input type="text"  id="title" name="title"
@@ -80,9 +84,9 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
                <input type="text" id="body" name="body"
                onChange={e=> setBody(e.target.value)}
                value={body}
-               placeholder="What do you want to post about?"
+               placeholder="Enter the body of your post"
                />
-               <button type="submit">Submit!</button>
+               <button type="submit" >Submit!</button>
            </form>
        </div>
     )

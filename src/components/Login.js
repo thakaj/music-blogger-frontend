@@ -6,8 +6,8 @@ function Login({handleLogin, user}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errors, setErrors] = useState([])
-    
-    function handleSubmit(e){
+
+        function handleSubmit(e){
         e.preventDefault()
         fetch("/login", {
             method: "Post",
@@ -26,10 +26,9 @@ function Login({handleLogin, user}){
                 r.json()
                     .then(data => {
                         console.log("Login was sucessful")
-                        handleLogin(data)
+                        handleLogin(data.user)
                         setUsername("")
                         setPassword("")
-                        window.location.reload()
             })
             }else {
                 r.json()
@@ -42,7 +41,7 @@ function Login({handleLogin, user}){
     }
     return (
         <div>
-             {errors.length > 0 &&<h2 style={{ color: "red" }} >{errors}</h2>}
+             {errors.length > 0 &&<h2 style={{ color: "black" }} >Error: {errors} please try again</h2>}
              <label>Login: </label>
              <form onSubmit={handleSubmit}>
              <label> Username: </label><br/>

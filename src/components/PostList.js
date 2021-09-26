@@ -11,10 +11,10 @@ function PostList({user}){
     const [handleErrors, setHandleErrors] = useState([])
 
     useEffect(()=>{
-        fetch(`/posts`)
+        fetch("/posts")
         .then((r)=> r.json())
         .then((data) => {
-            
+            console.log(data)
             setPosts(data)
         })
     },[])
@@ -49,8 +49,11 @@ function PostList({user}){
             if (r.ok){
                 r.json()
                 .then(data =>{
-                    destroyPost(data)
-                    window.location.reload()
+                    console.log(data)
+                    if (handleErrors){
+                        setHandleErrors([])
+                    }
+                    destroyPost(data.id)
                 })
             }else {
                 r.json()
@@ -71,8 +74,10 @@ function PostList({user}){
     }
     return (
         <div>
-            {handleErrors.length > 0 &&<h2 style={{ color: "red" }}>{handleErrors}</h2>}
-            <PostForm addNewPost={addNewPost} title={title} setTitle={setTitle} body={body} setBody={setBody} id={id} setId={setId} editPost={editPost} setHandleErrors={setHandleErrors}/>
+            {handleErrors.length > 0 &&<h2 style={{ color: "black" }}>Error: {handleErrors}</h2>}
+            <PostForm user={user} addNewPost={addNewPost} title={title} setTitle={setTitle} body={body}
+             setBody={setBody} id={id} setId={setId} editPost={editPost} setHandleErrors={setHandleErrors} handleErrors={handleErrors}/>
+            <div>{posts.body}</div>
             {posts.map(post => 
             <div key={post.id}>
             <article>
