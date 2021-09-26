@@ -19,7 +19,7 @@ Here is the backend file needed: https://github.com/thakaj/music-blogger
 
 Here is a video explanation of my project: https://www.youtube.com/watch?v=w156-EvAtME&ab_channel=TaulantHakaj
 
-Here is a blog i wrote about verifying users within strong paramaters: https://taulantfhakaj.medium.com/verifying-users-within-strong-parameters-ruby-on-rails-eb1c671dd868
+Here is a blog i wrote about authenticating users and authorizing their ability to access some CRUD functionality: https://taulantfhakaj.medium.com/authorizing-users-to-access-crud-functionality-with-ruby-on-rails-fb852920da0e
 
 Resources used:
 
