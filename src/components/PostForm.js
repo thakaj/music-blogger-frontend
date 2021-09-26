@@ -5,12 +5,11 @@ import React from "react"
 //validates :title, presence: true
 
 function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPost, setHandleErrors, handleErrors}){
-    
     function handleSubmit(e){
       e.preventDefault()
       if(id) {
         handleEdit()
-    } else {
+      } else {
         handleCreate()
     }
 }
@@ -34,15 +33,17 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
                         setHandleErrors([])
                     }
                     editPost(data)
+                    alert("Your post has been updated!")
                 })
             }else {
                 r.json()
-                .then(e => setHandleErrors(e.errors))
+                .then(e =>{ 
+                    setHandleErrors(e.errors)
+                    setId("")
+                })
             }
         })
     }
-    
-
     function handleCreate(){
         fetch(`/posts/`, {
             method: "POST",
@@ -62,6 +63,7 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
                         setHandleErrors([])
                     }
                     addNewPost(data)
+                    alert("Your post has been created!")
                 })
             }else {
                 r.json()
@@ -69,10 +71,13 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
             }
         })
     }
-
+    function handleClear(){
+        setTitle("")
+        setBody("")
+        setId("")
+    }
     return (
         <div>
-           {/* {errors.length > 0 && (<ul style={{ color: "Black" }}>{errors.map((error) => (<li key={error}>Error: {error}</li>))}</ul>)}  */}
            <form onSubmit={handleSubmit}>
                <label>Title: </label>
                <input type="text"  id="title" name="title"
@@ -86,7 +91,8 @@ function PostForm({addNewPost, title, setTitle, setBody, body, id, setId, editPo
                value={body}
                placeholder="Enter the body of your post"
                />
-               <button type="submit" >Submit!</button>
+               <button type="submit" >Post Submission</button>
+               <button type="button" onClick={handleClear}>Reset Inputs</button>
            </form>
        </div>
     )

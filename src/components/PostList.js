@@ -54,6 +54,7 @@ function PostList({user}){
                         setHandleErrors([])
                     }
                     destroyPost(data.id)
+                    alert("Your post has been deleted!")
                 })
             }else {
                 r.json()
@@ -61,14 +62,6 @@ function PostList({user}){
             }
         })
     }
-
-   
-   
-
-
-
-
-
     if (!user){
         return <Redirect to="/login"/>
     }
@@ -81,7 +74,8 @@ function PostList({user}){
             {posts.map(post => 
             <div key={post.id}>
             <article>
-            <h1>{post.title}</h1>
+            <h1>Username: {post.user.username}</h1>
+            <h2>Title: {post.title}</h2>
             <p>{post.body}</p>
             <button onClick={() => handleEditButton(post)} type="edit">Edit</button>
             <button onClick={()=> handleDelete(post)}>Delete</button>
